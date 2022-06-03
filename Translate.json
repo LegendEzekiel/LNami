@@ -1,0 +1,27 @@
+{
+  "Nami": {
+    "Combo": "连招",
+    "Use Q": "使用 Q",
+    "Only Slow Use": "仅减速使用",
+    "Use W": "使用W",
+    "W Settings": "W设置",
+    "Use": "使用",
+    "Priority Level": "优先级",
+    "Use R": "使用 R",
+    "Key R": "快捷键 R",
+    "Use R >= X Enemy ": "敌人数量 ≥ X 时使用",
+    "Harass ": "骚扰",
+    "Auto ": "自动",
+    "Interrupt Q ": "技能中断 Q",
+    "Gap Q ": "防突进 Q",
+    "cant move Q ": "不可自动移动 Q",
+    "Use E (Auto Attck) ": "使用 E (攻击后)",
+    "Whitelist E ": "使用E白名单",
+    "Use Range Settings ": "使用范围设置",
+    "Use Q Range ": "Q 使用范围",
+    "Use W Range ": "W 使用范围",
+    "Use E Range ": "E 使用范围",
+    "Use R Range ": "R 使用范围",
+    "Drawing ": "线圈"
+  }
+}
