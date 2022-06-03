@@ -113,7 +113,7 @@ SpellData = {
         ['maxRange'] = 2750,
         ['range'] = 1000,
         ['delay'] = 0.5,
-        ['width'] = 400,
+        ['width'] = 250,
         ['speed'] = 850,
         ['type'] = SkillshotType.SkillshotLine,
         ['collision'] = true,
@@ -607,7 +607,7 @@ local function OnNewPath(sender, isDash, dashSpeed, path)
             local pathStart = path[1];
             local pathEnd = path[2];
             if pathStart and pathEnd then
-                if sender:IsValidTarget(875) then
+                if My.position:Distance(pathEnd) <=  875 then
                     Q:Cast(pathEnd);
                 end
 
