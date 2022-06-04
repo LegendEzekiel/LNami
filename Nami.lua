@@ -106,20 +106,20 @@ SpellData = {
         ['collision'] = true,
         ['collisionFlags'] = CollisionFlag.CollidesWithYasuoWall,
         ['minHitChance'] = HitChance.High,
-        ['boundingRadiusMod'] = false
+        ['boundingRadiusMod'] = true
     },
 
     ["R"] = {
         ['maxRange'] = 2750,
         ['range'] = 1000,
         ['delay'] = 0.5,
-        ['width'] = 250,
+        ['width'] = 350,
         ['speed'] = 850,
         ['type'] = SkillshotType.SkillshotLine,
         ['collision'] = true,
         ['collisionFlags'] = CollisionFlag.CollidesWithYasuoWall,
         ['minHitChance'] = HitChance.High,
-        ['boundingRadiusMod'] = true
+        ['boundingRadiusMod'] = false
     },
 
 }
