@@ -101,7 +101,7 @@ SpellData = {
         ['range'] = 875,
         ['delay'] = 1,
         ['width'] = 150,
-        ['speed'] = math.huge,
+        ['speed'] = math.flt_max,
         ['type'] = SkillshotType.SkillshotCircle,
         ['collision'] = true,
         ['collisionFlags'] = CollisionFlag.CollidesWithYasuoWall,
@@ -338,7 +338,7 @@ local function GetWRangeUseAlly(Range)
     for _, ally in ObjectManager.allyHeroes:pairs() do
         if ally.isAlive and ally:IsValidTarget(Range) then
             for _, enemy in ObjectManager.enemyHeroes:pairs() do
-                if enemy and enemy.isAlive and ally.position:Distance(enemy.position) <= 650  and enemy.isVisible then
+                if enemy and enemy.isAlive and ally.position:Distance(enemy.position) <= 650 and enemy.isVisible then
                     return ally;
                 end
             end
@@ -356,7 +356,7 @@ local function GetWRangeUseAllyCombo(Range)
         if ally.isAlive and ally:IsValidTarget(Range) and MenuConfig['Combo']['Use W Objcet'][ally.charName].value then
             local allyLevel = MenuConfig['Combo']['Use W Level'][ally.charName].value;
             for _, enemy in ObjectManager.enemyHeroes:pairs() do
-                if enemy and enemy.isAlive and ally.position:Distance(enemy.position) <= 650  and enemy.isVisible then
+                if enemy and enemy.isAlive and ally.position:Distance(enemy.position) <= 650 and enemy.isVisible then
                     if allyLevel > Level then
                         UseObj = ally;
                         Level = allyLevel;
@@ -519,18 +519,24 @@ local function UseQBySpellCantMove()
         for _, enemy in ObjectManager.enemyHeroes:pairs() do
 
             if enemy:IsValidTarget(875) then
-                --Not Nil
-                if AnimSpell[enemy.charName] then
-                    if enemy.isAlive then
-                        for index, data in pairs(AnimSpell[enemy.charName]) do
-                            if He:IsPlayingAnimation(Game.fnvhash(index)) then
-                                Q:Cast(enemy.position);
-                                return ;
-                            end
+                ----Not Nil
+                --if AnimSpell[enemy.charName] then
+                --    if enemy.isAlive then
+                --        for index, data in pairs(AnimSpell[enemy.charName]) do
+                --            if He:IsPlayingAnimation(Game.fnvhash(index)) then
+                --                Q:Cast(enemy.position);
+                --                return ;
+                --            end
+                --
+                --        end
+                --    end
+                --end
 
-                        end
-                    end
+                if enemy:IsCastingInterruptibleSpell() > 0 then
+                    Q:Cast(enemy.position);
+
                 end
+
             end
         end
 
@@ -607,7 +613,7 @@ local function OnNewPath(sender, isDash, dashSpeed, path)
             local pathStart = path[1];
             local pathEnd = path[2];
             if pathStart and pathEnd then
-                if My.position:Distance(pathEnd) <=  875 then
+                if My.position:Distance(pathEnd) <= 875 then
                     Q:Cast(pathEnd);
                 end
 
@@ -716,26 +722,26 @@ SpecialSpellGap = {
 
 }
 
-local function OnSpellAnimationStart(sender, castArgs)
-    if sender and sender.isHero and sender.isEnemy and Q:Ready() and MenuConfig['Auto']['Interrupt Q'].value then
-        if SpecialSpellGap[sender.charName] and SpecialSpellGap[sender.charName][castArgs.slot] and SpecialSpellGap[sender.charName][castArgs.slot]['value'] then
-            local SpellRange = sender.spellBook:GetSpellEntry(castArgs.slot):DisplayRange();
-            local CastPos = nil;
-            if castArgs.from:Distance(castArgs.to) > SpellRange then
-                CastPos = castArgs.from:RelativePos(castArgs.to, SpellRange)
-            else
-                CastPos = castArgs.to
-            end
-            if SpecialSpellGap[sender.charName][castArgs.slot]['type'] and SpecialSpellGap[sender.charName][castArgs.slot]['type'] == "interrupt" then
-                CastPos = castArgs.from;
-            end
-
-            if My.position:Distance(CastPos) <= 875 then
-                Q:Cast(CastPos);
-            end
-        end
-
-
-    end
-end
-Callback.Bind(CallbackType.OnSpellAnimationStart, OnSpellAnimationStart)
+--local function OnSpellAnimationStart(sender, castArgs)
+--    if sender and sender.isHero and sender.isEnemy and Q:Ready() and MenuConfig['Auto']['Interrupt Q'].value then
+--        if SpecialSpellGap[sender.charName] and SpecialSpellGap[sender.charName][castArgs.slot] and SpecialSpellGap[sender.charName][castArgs.slot]['value'] then
+--            local SpellRange = sender.spellBook:GetSpellEntry(castArgs.slot):DisplayRange();
+--            local CastPos = nil;
+--            if castArgs.from:Distance(castArgs.to) > SpellRange then
+--                CastPos = castArgs.from:RelativePos(castArgs.to, SpellRange)
+--            else
+--                CastPos = castArgs.to
+--            end
+--            if SpecialSpellGap[sender.charName][castArgs.slot]['type'] and SpecialSpellGap[sender.charName][castArgs.slot]['type'] == "interrupt" then
+--                CastPos = castArgs.from;
+--            end
+--
+--            if My.position:Distance(CastPos) <= 875 then
+--                Q:Cast(CastPos);
+--            end
+--        end
+--
+--
+--    end
+--end
+--Callback.Bind(CallbackType.OnSpellAnimationStart, OnSpellAnimationStart)
