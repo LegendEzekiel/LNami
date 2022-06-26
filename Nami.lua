@@ -264,15 +264,23 @@ local function LoadMenu()
     local UseRange = Menu:AddMenu("useRange", "Use Range Settings");
     MenuConfig['Use Range']['Q'] = UseRange:AddSlider("useQRange", 'Use Q Range', 875, 1, 875, 1, function(s)
         Champions.Q = (SDKSpell.Create(SpellSlot.Q, MenuConfig['Use Range']['Q'].value, DamageType.Magical))
+        Q = Champions.Q;
+
     end)
     MenuConfig['Use Range']['W'] = UseRange:AddSlider("useWRange", 'Use W Range', 725, 1, 725, 1, function(s)
         Champions.W = (SDKSpell.Create(SpellSlot.W, MenuConfig['Use Range']['W'].value, DamageType.Magical))
+
+        W = Champions.W;
+
     end)
     MenuConfig['Use Range']['E'] = UseRange:AddSlider("useERange", 'Use E Range', 800, 1, 800, 1, function(s)
         Champions.E = (SDKSpell.Create(SpellSlot.E, MenuConfig['Use Range']['E'].value, DamageType.Magical))
+        E = Champions.E;
+
     end)
     MenuConfig['Use Range']['R'] = UseRange:AddSlider("useRRange", 'Use R Range', 1000, 1, 2500, 10, function(s)
         Champions.R = (SDKSpell.Create(SpellSlot.R, MenuConfig['Use Range']['R'].value, DamageType.Magical))
+        R = Champions.R;
     end)
 
     --draw
