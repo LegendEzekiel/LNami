@@ -613,13 +613,13 @@ local function ontick()
         UseQByCantMove();
     end
 
-    if  Orbwalker.activeMode== OrbwalkerMode.Combo then
+    if  Champions.Combo then
 
         Combo();
 
     end
 --      print(Champions.LagFree);
-    if  Orbwalker.activeMode== OrbwalkerMode.Harass then
+    if   Champions.Harass  then
 
         Harass();
 
