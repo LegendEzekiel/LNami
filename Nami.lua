@@ -206,31 +206,78 @@ local function Init()
     E = Champions.E;
     R = Champions.R;
 end
+local function AutoLanguage(str)
+
+
+    local i_lg = UI:GetLanguage(); --0=英语  1=中文
+    if i_lg == 0 then
+        --英语
+
+        return str;
+    end
+
+    if i_lg == 1 then
+        --中文
+        local strR = string.gsub(str, "Combo", "连招");
+        strR = string.gsub(strR, "Settings", "设置");
+        strR = string.gsub(strR, "Use", "使用");
+        strR = string.gsub(strR, "Enemy", "敌方");
+        strR = string.gsub(strR, "Auto", "自动");
+        strR = string.gsub(strR, "Range", "范围");
+        strR = string.gsub(strR, "Drawing", "绘制");
+        strR = string.gsub(strR, "Olny", "仅");
+        strR = string.gsub(strR, "Pull", "拉");
+        strR = string.gsub(strR, "Turret", "塔");
+        strR = string.gsub(strR, "Or", "或");
+        strR = string.gsub(strR, "Push", "推");
+        strR = string.gsub(strR, "Away", "走");
+        strR = string.gsub(strR, "To", "到");
+        strR = string.gsub(strR, "Down", "下");
+        strR = string.gsub(strR, "My", "自己");
+        strR = string.gsub(strR, "Pred", "预测");
+        strR = string.gsub(strR, "Damage", "伤害值");
+        strR = string.gsub(strR, "Current", "当前");
+        strR = string.gsub(strR, "Cast", "施法");
+        strR = string.gsub(strR, "Check", "检查");
+            strR = string.gsub(strR, "Only", "仅");
+               strR = string.gsub(strR, "Slow", "减速");
+
+                    strR = string.gsub(strR, "Gap", "防突进");
+                    strR = string.gsub(strR, "Whitelist", "白名单");
+
+
+                       strR = string.gsub(strR, "cant move", "无法移动");
+        return strR;
+
+    end
+    return str;
+
+end
 
 local function LoadMenu()
 
 
     local Combo = Menu:AddMenu("Combo", "Combo");
-    MenuConfig['Combo']['Use Q'] = Combo:AddCheckBox("useQ", 'Use Q');
-    MenuConfig['Combo']['Only Slow'] = Combo:AddCheckBox("slowQ", 'Only Slow Use', false);
-    MenuConfig['Combo']['Use W'] = Combo:AddCheckBox("useW", 'Use W');
+    MenuConfig['Combo']['Use Q'] = Combo:AddCheckBox("useQ", AutoLanguage('Use Q'));
+    MenuConfig['Combo']['Only Slow'] = Combo:AddCheckBox("slowQ", AutoLanguage('Only Slow Use'), false);
+    MenuConfig['Combo']['Use W'] = Combo:AddCheckBox("useW", AutoLanguage('Use W'));
     local Wmenu = Combo:AddMenu("Wsetting", "W Settings");
     for _, ally in ObjectManager.allyHeroes:pairs() do
         local charMenu = Wmenu:AddMenu(ally.charName .. "Menu", ally.charName);
-        MenuConfig['Combo']['Use W Objcet'][ally.charName] = charMenu:AddCheckBox(ally.charName .. "Use", "Use");
+        MenuConfig['Combo']['Use W Objcet'][ally.charName] = charMenu:AddCheckBox(ally.charName .. "Use", AutoLanguage("Use"));
         MenuConfig['Combo']['Use W Level'][ally.charName] = charMenu:AddSlider(ally.charName .. "Level", "Priority Level", 1, 1, 5);
     end
 
-    MenuConfig['Combo']['Use R'] = Combo:AddCheckBox("useR", 'Use R');
+    MenuConfig['Combo']['Use R'] = Combo:AddCheckBox("useR", AutoLanguage('Use R'));
     MenuConfig['Combo']['Use Key R'] = Combo:AddKeyBind("keyR", ("Key R"), 84, false, false);
     MenuConfig['Combo']['Use Key R']:PermaShow(true, true);
-    MenuConfig['Combo']['Use R Number'] = Combo:AddSlider("useRrange", 'Use R >= X Enemy', 3, 1, 5)
+    MenuConfig['Combo']['Use R Number'] = Combo:AddSlider("useRrange", AutoLanguage('Use R >= X Enemy'), 3, 1, 5)
 
     MenuConfig['Combo']['Use R Number']:PermaShow(true, true);
 
     local Harass = Menu:AddMenu("Harass", "Harass");
-    MenuConfig['Harass']['Use Q'] = Harass:AddCheckBox("useQ", 'Use Q')
-    MenuConfig['Harass']['Use W'] = Harass:AddCheckBox("useW", 'Use W');
+    MenuConfig['Harass']['Use Q'] = Harass:AddCheckBox("useQ", AutoLanguage('Use Q'));
+    MenuConfig['Harass']['Use W'] = Harass:AddCheckBox("useW", AutoLanguage('Use W'));
     local Auto = Menu:AddMenu("Auto", "Auto");
     -- MenuConfig['Auto']['Interrupt Q'] = Auto:AddCheckBox("Interrupt", 'Interrupt Dangerous Skills Use Q or R(Q Not Ready)');
     --local Skills=  Auto:AddMenu("Skills","Skills")
@@ -251,12 +298,12 @@ local function LoadMenu()
     --     end
     -- end
 
-    MenuConfig['Auto']['Interrupt Q'] = Auto:AddCheckBox("InterruptQ", 'Interrupt Q');
+    MenuConfig['Auto']['Interrupt Q'] = Auto:AddCheckBox("InterruptQ", AutoLanguage('Interrupt Q'));
 
-    MenuConfig['Auto']['Gap Q'] = Auto:AddCheckBox("gapQ", 'Gap Q');
-    MenuConfig['Auto']['CanNot Move Use Q'] = Auto:AddCheckBox("canNot Move Use Q", 'cant move Q');
-    MenuConfig['Auto']['Use E'] = Auto:AddCheckBox("useE", 'Use E (Auto Attck)');
-    local WhitelistE = Auto:AddMenu("Ewhitelist", "Whitelist E");
+    MenuConfig['Auto']['Gap Q'] = Auto:AddCheckBox("gapQ",AutoLanguage( 'Gap Q'));
+    MenuConfig['Auto']['CanNot Move Use Q'] = Auto:AddCheckBox("canNot Move Use Q", AutoLanguage('cant move Q'));
+    MenuConfig['Auto']['Use E'] = Auto:AddCheckBox("useE",AutoLanguage( 'Use E (Auto Attck)'));
+    local WhitelistE = Auto:AddMenu("Ewhitelist", AutoLanguage("Whitelist E"));
     for _, ally in ObjectManager.allyHeroes:pairs() do
         MenuConfig['Auto']['WhitelistE'][ally.charName] = WhitelistE:AddCheckBox(ally.charName, ally.charName)
     end
@@ -566,12 +613,13 @@ local function ontick()
         UseQByCantMove();
     end
 
-    if Champions.Combo then
+    if  Orbwalker.activeMode== OrbwalkerMode.Combo then
 
         Combo();
 
     end
-    if Champions.Harass then
+--      print(Champions.LagFree);
+    if  Orbwalker.activeMode== OrbwalkerMode.Harass then
 
         Harass();
 
